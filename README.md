@@ -2,7 +2,7 @@
 
 A custom roster mod for **Teamfight Manager 2** featuring real League of Legends esports players, teams, and logos from the 2026 competitive season.
 
-![Version](https://img.shields.io/badge/version-v0.4.4.2-blue)
+![Version](https://img.shields.io/badge/version-v0.4.4.3-blue)
 ![TFM2 Version](https://img.shields.io/badge/TFM2-v0.4.4-green)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
@@ -28,15 +28,16 @@ This mod replaces the default TFM2 roster database with real-world data:
 
 ## Installation
 
-### Quick Install (Recommended)
+### Quick Import (Recommended)
 
 1. Download `tfm2_teams_and_rosters.tfm2db` from the [Releases](../../releases) page
-2. Rename it to `custom_database.tfm2db`
-3. Copy to: `%APPDATA%\TeamSamoyed\TeamfightManager2\data\`
-4. Create a file named `custom_db_enabled.flag` in the same folder (can be empty)
-5. Restart TFM2
+2. Import it through the in-game custom database/import flow
+3. Restart TFM2 if the game asks you to reload custom data
 
-### Manual Path
+### Manual AppData Path
+
+The packaged release file is built for the game's import flow. If you manually edit AppData, back up the current file first and let the game create its own `custom_database.tfm2db` after importing.
+
 ```
 C:\Users\<YourName>\AppData\Roaming\TeamSamoyed\TeamfightManager2\data\custom_database.tfm2db
 ```
@@ -48,7 +49,7 @@ C:\Users\<YourName>\AppData\Roaming\TeamSamoyed\TeamfightManager2\data\custom_da
 | Feature | Status | Notes |
 |---------|--------|-------|
 | Team Names | ✅ Working | All 120 teams renamed |
-| Team Logos | ✅ Working | Embedded custom logo assets |
+| Team Logos | ✅ Working | Embedded custom logo assets, including all 120 verified custom logo blocks |
 | Player Names | ✅ Working | Real IGNs for all players |
 | Player Stats | ✅ Working | Multi-year Oracle's Elixir base with Games of Legends player/team margin adjustments |
 | Position Skills | ✅ Working | Based on actual roles played |
@@ -75,14 +76,15 @@ C:\Users\<YourName>\AppData\Roaming\TeamSamoyed\TeamfightManager2\data\custom_da
 - **Academy/Challenger players**: Division 2, minor, and regional players are capped lower than major-region starters to preserve real-world league gaps.
 - **Role proficiency**: Based on games played per position, not necessarily player preference.
 
-## Latest Release: v0.4.4.2
+## Latest Release: v0.4.4.3
 
-- Corrected player ages using exact decoded age offsets.
-- Rebalanced visible player stats from 2023-2026 Oracle's Elixir data with recent-season weighting.
-- Added Games of Legends player aggregates as a capped secondary nudge.
-- Added Games of Legends team margin differentials for same-league team separation.
-- Increased the gap between major top teams, lower major teams, minor leagues, division 2, and regional leagues.
-- Packaged database SHA256: `3f7c2eddd0a5128e23617bf2ea7c3fead5a8ce4eb918281accad47fd89d8876d`.
+- Repacked the current verified logo database as a direct-import `.tfm2db` package (`kind=1`, gzip offset `25`).
+- Preserved the validated v0.4.4.2 roster, age, contract, and balance data.
+- Verified 120 team logo references and 120 embedded custom logo blocks after packaging.
+- Fixed the SillySilly Gaming logo path through the import package using `custom:custom_team_logo/79`.
+- Left stadium names unchanged after rolling back the experimental venue pass.
+- Validated the packaged file with `tools/validate.go` and a decompressed-core comparison against the known-good logo candidate.
+- Packaged database SHA256: `fde02f2821d47be645316f3e8335d388b068070e0351f5a4f3939b1292e28cb4`.
 
 ## For Modders: Create Your Own Roster
 
